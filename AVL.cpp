@@ -141,42 +141,33 @@ int fatorBalanceamento(NO* no) {
 }
 
 NO* girarDireita(NO* y) {  
-   /* Rotação simples à direita  
-             y                x  
-            / \              / \  
-           x   T3   =>      T1  y  
-          / \                  / \  
-        T1  T2               T2  T3  
-   */  
 
-   // Passo 1: Armazene o filho esquerdo de 'y' em uma variável temporária 'x'.  
-   // Passo 2: Transfira a subárvore direita de 'x' para a subárvore esquerda de 'y'.  
-   // Passo 3: Atualize 'x' para ser o novo nó raiz da subárvore.  
-   // Passo 4: Recalcule as alturas dos nós afetados.  
-   // Passo 5: Retorne o novo nó raiz ('x').  
+    NO* filhoEsquerdo = y->esq;
+    y->esq = filhoEsquerdo->dir;
+    filhoEsquerdo->dir = y;
 
-	// provisoriamente retorna o ponteiro passado como parâmetro
-	return y; 
+    // Atualiza as alturas
+    y->altura = max(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+    filhoEsquerdo->altura = max(alturaNo(filhoEsquerdo->esq), alturaNo(filhoEsquerdo->dir)) + 1;    
+
+    return filhoEsquerdo; // Retorna o novo nó que agora é a raiz da subárvore
+                                                                                          
+     
 }  
 
 NO* girarEsquerda(NO* x) {  
-   /* Rotação simples à esquerda  
-           x                    y  
-          / \                  / \  
-         T1  y      =>        x  T3  
-            / \              / \  
-           T2 T3            T1 T2  
-   */  
+  
+    NO* filhoDireito = x->dir;
+    x->dir = filhoDireito->esq;
+    filhoDireito->esq = x;
 
-   // Passo 1: Armazene o filho direito de 'x' em uma variável temporária 'y'.  
-   // Passo 2: Transfira a subárvore esquerda de 'y' para a subárvore direita de 'x'.  
-   // Passo 3: Atualize 'y' para ser o novo nó raiz da subárvore.  
-   // Passo 4: Recalcule as alturas dos nós afetados.  
-   // Passo 5: Retorne o novo nó raiz ('y').  
+    // Atualiza as alturas
+    x->altura = max(alturaNo(x->esq), alturaNo(x->dir)) + 1;
+    filhoDireito->altura = max(alturaNo(filhoDireito->esq), alturaNo(filhoDireito->dir)) + 1;
 
+    return filhoDireito; // Retorna o novo nó que agora é a raiz da subárvore
 
-    // provisoriamente retorna o ponteiro passado como parâmetro
-    return x; 
+   
 }
 
 NO* insereArvore(NO* no, int valor) {
